@@ -1,0 +1,128 @@
+1.  Check Prime
+	
+
+import java.util.Scanner;
+
+class Assignment {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int factCnt = 0;
+        for(int i=2 ; i*i <= num ; i++) {
+            if(num % i == 0) {
+                factCnt++;
+            }
+            
+        }
+        if(factCnt > 1) {
+                System.out.print(num + " IS NOT A PRIME NUMBER");
+            }
+            else{
+                 System.out.print(num + " IS A PRIME NUMBER");
+            }
+    }
+}
+
+------------------------------------------------------------------------------------------------------
+
+2. Armstrong Number
+
+import java.util.Scanner;
+
+class Assignment {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int temp = num;
+        int ans = 0;
+        while(temp!=0) {
+            int d = temp % 10;
+            temp = temp / 10;
+            ans = ans + (d*d*d); 
+        }
+        if(num == ans) {
+            System.out.println(num + " IS A ARMSTRONG NUMBER");
+        }
+        else {
+            System.out.println(num + " IS NOT A ARMSTRONG NUMBER");
+        }
+    }
+}
+
+-------------------------------------------------------------------------------------------------------
+
+3. Palindrome Number
+
+import java.util.Scanner;
+class Assignment {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int temp = num;
+        int rev = 0;
+        while(temp!=0) {
+            int u = temp%10;
+            rev = (rev*10) + u;
+            temp = temp/10;
+        }
+        String y = "is a palindrome";
+        String n = "not a palindrome";
+        System.out.println((rev == num)? y:n);
+    }
+}
+
+
+
+----------------------------------------------------------------------------------------------------------
+
+4. Perfect Number
+
+import java.util.Scanner;
+
+class Assignment {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int sum = 1;
+        for(int i=2 ; i < num ; i++) {
+            if(num % i == 0) {
+                sum = sum + i;
+            } 
+        }
+        if(sum == num) System.out.println("IS PERFECT NUMBER");
+        else System.out.println("IS NOT A PERFECT NUMBER");
+    }
+}
+
+--------------------------------------------------------------------------------------------------------
+
+5. Integer to binary
+
+import java.util.Scanner;
+class Assignment {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int num = sc.nextInt();
+        int temp = num;
+        StringBuilder sb = new StringBuilder();
+        while(temp > 0) {
+            int rem = temp%2;
+            sb.insert(0, rem);
+            temp = temp/2;
+        }
+        
+        System.out.println(sb);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
