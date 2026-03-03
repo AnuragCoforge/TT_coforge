@@ -95,4 +95,24 @@ select stdname, reverse(stdname) as reverseName from student;
 select * from student;
 select stdname, replace(stdname, ' ', '*') as replaceName from student where studid = 123; 
 select stdname, instr(stdname, 'Swa') as instrvalue from student where studid = 123;
+select stdname, lpad(stdname, 10, '*') as lpadstr from student where stdname= 'Shivaya';
 
+
+/*  date time tutorials*/
+
+select curdate() as cuurentDate;
+select now() as now;
+
+select year(curdate()) as year,
+month(curdate()) as month,
+day(curdate()) as day;
+
+select sysdate();
+
+select hour('2026-02-15 12:10:45') as hour;
+select timestampdiff(year,'2001-09-01', '2004-05-11') as ageDiff;
+select timestampdiff(day,'2001-09-01', '2004-05-11') as ageDiff;
+select timestampdiff(month,'2001-09-01', '2004-05-11') as ageDiff;
+
+select adddate(curdate(), 7) as OneWeekAhead;
+select date_format(curdate(), '%b-%d-%y') as FormattedDate;
