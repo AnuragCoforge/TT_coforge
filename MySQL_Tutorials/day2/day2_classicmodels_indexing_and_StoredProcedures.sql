@@ -283,4 +283,31 @@ explain analyze
 select * from customers where country = 'usa' and city = 'nyc';
 
 
+use cfgdb;
+show tables;
 
+create table employees(
+eid numeric,
+ename varchar(20),
+salary numeric,
+email varchar(20),
+mobile varchar(10),
+doj date,
+dob date,
+primary key(eid)
+);
+
+desc employees;
+use cfgdb;
+show tables;
+
+create table customer (
+custid numeric primary key,
+custname varchar(25),
+address varchar(30),
+email varchar(25),
+mobile varchar(15)
+);
+
+insert into customer value(12333, "Anurag Tiwari", "ffgdjuyw", "anurag.tiwari@em.com", "6393743886");
+select * from customer;
