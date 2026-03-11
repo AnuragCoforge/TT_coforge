@@ -2,6 +2,7 @@ package com.coforge.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,9 +18,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 
 
-/**
- * Servlet implementation class EmployeeServlet
- */
 @WebServlet("/employee")
 public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -51,15 +49,36 @@ public class EmployeeServlet extends HttpServlet {
 			RequestDispatcher rd=request.getRequestDispatcher("employee-list.jsp");
 			rd.forward(request, response);
 			break;
+		case "searchEmployee":
+			RequestDispatcher rds=request.getRequestDispatcher("employee-search.jsp");
+			rds.forward(request, response);
+			out.println();// for displaying the result for time being...
+			break;
 		case "new":
 			rd=request.getRequestDispatcher("employee-form.jsp");
 			rd.forward(request, response);
 			break;
 		case "edit":
 			long eid=Long.parseLong(request.getParameter("eid"));
-			Employee emp=dao.getEmployeeById(eid);
-			request.setAttribute("employee", emp);
-			rd=request.getRequestDispatcher(("employee-form.jsp"));
+			Employee emp=null;
+			
+			try {
+				emp = dao.getEmployeeById(eid);
+			} catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+ 
+		    request.setAttribute("employee", emp);
+		    request.setAttribute("editMode", true);
+		    
+		    request.getRequestDispatcher("employee-form.jsp").forward(request, response);
+		  break;
+		case "delete":
+			long eid1 = Long.parseLong(request.getParameter("eid"));
+			dao.DeleteById(eid1);
+			rd = request.getRequestDispatcher(("employee?action=list"));
 			rd.forward(request, response);
 			break;
 		default:
@@ -75,23 +94,31 @@ public class EmployeeServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		String eid=request.getParameter("eid");
 		String ename=request.getParameter("ename");
-		double salary=Double.parseDouble(request.getParameter("salary"));
+		double salaryStr=Double.parseDouble(request.getParameter("salary"));
 		String email=request.getParameter("email");
 		String mobile=request.getParameter("mobile");
-		LocalDate doj=LocalDate.parse(request.getParameter("doj"));
-		LocalDate dob=LocalDate.parse(request.getParameter("dob"));
+		LocalDate dojStr=LocalDate.parse(request.getParameter("doj"));
+		LocalDate dobStr=LocalDate.parse(request.getParameter("dob"));
 		
 		if(eid==null || eid.isEmpty()) {
-			Employee e=new Employee(ename,salary,email,mobile,doj,dob);
+			Employee e=new Employee(ename,salaryStr,email,mobile,dojStr,dobStr);
 			dao.addEmployee(e);
 		} else {
-			long empid=Long.parseLong(eid);
-			Employee emp=new Employee(empid,ename,salary,email,mobile,doj,dob);
-			dao.updateEmployee(emp);
-		}
-		response.sendRedirect("employee?action=list");
-		
+	        // UPDATE
+	        try {
+	            long empid = Long.parseLong(eid);
+	            Employee emp = new Employee(empid, ename, salaryStr, email, mobile, dojStr, dobStr);
+	            dao.updateEmployee(emp);
+	            response.sendRedirect("employee?action=list&error=invalidId");
+	            return;
+	        
+	} catch (ClassNotFoundException | SQLException ex) {
+	    ex.printStackTrace();
+	    
 	}
-	
 
+	response.sendRedirect("employee?action=list");
+
+}
+	}
 }

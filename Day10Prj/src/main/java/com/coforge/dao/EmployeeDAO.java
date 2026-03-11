@@ -73,13 +73,83 @@ public class EmployeeDAO {
 		
 	}
 	
-	public void updateEmployee(Employee emp) {
-	
+	public void updateEmployee(Employee employee) throws ClassNotFoundException, SQLException {
+		String query =
+			    "UPDATE employees " +
+			    "SET ename = ?, salary = ?, email = ?, mobile = ?, doj = ?, dob = ? " +
+			    "WHERE eid = ?";
+ 
+			try(Connection conn = DBUtil.getConnection();
+					PreparedStatement ps = conn.prepareStatement(query)) {
+				
+				ps.setString(1, employee.getEname());
+			    ps.setDouble(2, employee.getSalary()); 
+			    ps.setString(3, employee.getEmail());
+			    ps.setString(4, employee.getMobile());
+			    
+			    ps.setDate(5, java.sql.Date.valueOf(employee.getDoj()));
+			    ps.setDate(6, java.sql.Date.valueOf(employee.getDob()));
+			 
+			    ps.setLong(7, employee.getEid());
+			    
+			    int rows = ps.executeUpdate();
+			    System.out.println(rows + " row(s) updated");
+			} catch (ClassNotFoundException | SQLException e) {
+			    e.printStackTrace();
+			}
+		}
 		
+	
+	
+	public void DeleteById(long eid) {
+		String query = "delete from employees where eid = ?";
+		
+        try(Connection conn=DBUtil.getConnection();
+    		PreparedStatement ps=conn.prepareStatement(query)) {
+        	
+            ps.setLong(1, eid);
+            ps.executeUpdate();
+            System.out.println("row deleted!");
+    			
+    		} catch (ClassNotFoundException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    			
+    		} catch (SQLException e) {
+    			// TODO Auto-generated catch block
+    			e.printStackTrace();
+    		
+    		}
 	}
 	
-	public Employee getEmployeeById(long eid) {
-		return null;
+	public Employee getEmployeeById(long eid) throws SQLException, ClassNotFoundException {
+		String sql = "SELECT eid, ename, salary, email, mobile, doj, dob FROM employees WHERE eid = ?";
+		 
+	    try (Connection con = DBUtil.getConnection();
+	         PreparedStatement ps = con.prepareStatement(sql)) {
+ 
+	        ps.setLong(1, eid);
+ 
+	        try (ResultSet rs = ps.executeQuery()) {
+	            if (rs.next()) {
+	                Employee emp = new Employee();
+	                emp.setEid(rs.getLong("eid"));
+	                emp.setEname(rs.getString("ename"));
+	                emp.setSalary(rs.getDouble("salary"));
+	                emp.setEmail(rs.getString("email"));
+	                emp.setMobile(rs.getString("mobile"));
+ 
+	                java.sql.Date dojSql = rs.getDate("doj");
+	                emp.setDoj(dojSql != null ? dojSql.toLocalDate() : null);
+ 
+	                java.sql.Date dobSql = rs.getDate("dob");
+	                emp.setDob(dobSql != null ? dobSql.toLocalDate() : null);
+ 
+	                return emp;
+	            }
+	        }
+	    }
+	    return null; // not found
 	}
 
 }

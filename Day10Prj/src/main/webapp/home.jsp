@@ -13,6 +13,7 @@
 		<h1>Employee Management Application</h1>
 		<a class="btn btn-primary" href="employee?action=list">View Employee</a>
 		<a class="btn btn-primary" href="employee?action=new">Add Employee</a>
+		<a class="btn btn-primary" href="employee?action=searchEmployee">Search Employees</a>
 	</div>
 
 </body>
