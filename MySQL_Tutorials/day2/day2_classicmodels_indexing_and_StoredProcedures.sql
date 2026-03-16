@@ -309,5 +309,47 @@ email varchar(25),
 mobile varchar(15)
 );
 
-insert into customer value(12333, "Anurag Tiwari", "ffgdjuyw", "anurag.tiwari@em.com", "6393743886");
+insert into employees value(12333, "Anurag Tiwari",23111 , "anr@em.com", "6393743886", "2026-3-12", "2024-12-3");
 select * from customer;
+
+select * from employees;
+insert into employees value(12333, "Anurag Tiwari", "ffgdjuyw", "anurag.tiwari@em.com", "6393743886");
+
+ALTER TABLE employees
+    MODIFY eid INT NOT NULL AUTO_INCREMENT,
+    ADD PRIMARY KEY (eid);
+
+
+
+ALTER TABLE employees
+  MODIFY eid BIGINT NOT NULL AUTO_INCREMENT,
+  ADD PRIMARY KEY (eid);
+
+
+ALTER TABLE employees
+  MODIFY eid BIGINT NOT NULL AUTO_INCREMENT;
+
+use cfgdb;
+desc employees;
+
+show tables;
+
+select * from student;
+desc student;
+
+create table account (
+accno int primary key,
+accholdername varchar(29) not null,
+acctype varchar(10),
+balance double not null
+);
+
+insert into account (accno , accholdername , acctype , balance )
+values
+(5001, 'swapna', 'savings', '50000'),
+(5002, 'amit', 'current', '80000');
+
+select * from account;
+insert into account (accno , accholdername , acctype , balance )
+values
+(5001, 'Anurag Tiwari', 'Current', '50000');
